@@ -39,7 +39,7 @@ dependencies:
   sqflite: ^2.0.0+3
   path_provider: ^2.0.2
   sqflite_sqlcipher: ^2.1.0
-  test_cov_console: ^0.2.0
+  test_cov_console: ^0.1.5
   firebase_core: ^1.6.0
   firebase_crashlytics: ^2.3.0
   flutter_bloc: ^8.0.0
