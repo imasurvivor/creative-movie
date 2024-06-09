@@ -11,6 +11,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_driver/driver_extension.dart';
 import 'package:movie/presentation/bloc/movie_detail_bloc.dart';
 import 'package:movie/presentation/bloc/movie_list_bloc.dart';
 import 'package:movie/presentation/bloc/popular_movie_bloc.dart';
@@ -44,6 +45,7 @@ import 'package:watchlist/presentation/pages/watchlist_page.dart';
 // }
 
 Future<void> main() async {
+  enableFlutterDriverExtension();
   WidgetsFlutterBinding.ensureInitialized();
   await HttpSslPinning.init();
 
