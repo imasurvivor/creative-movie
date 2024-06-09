@@ -15,3 +15,6 @@ Movie App Implement :
 
 ![Crashlytics](screenshot/crashlytics.png)
 ![Analytics](screenshot/analytics.png)
+
+How to use :
+use fvm 3.3.10
