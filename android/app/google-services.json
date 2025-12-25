@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "285038173444",
-    "project_id": "creative-movie",
-    "storage_bucket": "creative-movie.appspot.com"
+    "project_number": "428418053793",
+    "project_id": "creative-movie-26af2",
+    "storage_bucket": "creative-movie-26af2.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:285038173444:android:80846d1cd0fa50a76dc451",
+        "mobilesdk_app_id": "1:428418053793:android:ea7ab03d7d175b3d31a2e0",
         "android_client_info": {
           "package_name": "com.dicoding.ditonton"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "285038173444-l9l7qiihgmvn2tqj1eiafnd0ubca6q3q.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCweMnpNWTRlU2vz3sOxxKKgszmbIIPwWs"
+          "current_key": "AIzaSyDj6eo9yWRH0OY8PqV1B6oBo8g2pepi--Q"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "285038173444-l9l7qiihgmvn2tqj1eiafnd0ubca6q3q.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

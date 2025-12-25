@@ -1,6 +1,5 @@
 import 'package:about/about.dart';
 import 'package:core/core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

@@ -50,20 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCweMnpNWTRlU2vz3sOxxKKgszmbIIPwWs',
-    appId: '1:285038173444:android:80846d1cd0fa50a76dc451',
-    messagingSenderId: '285038173444',
-    projectId: 'creative-movie',
-    storageBucket: 'creative-movie.appspot.com',
+    apiKey: 'AIzaSyDj6eo9yWRH0OY8PqV1B6oBo8g2pepi--Q',
+    appId: '1:428418053793:android:ea7ab03d7d175b3d31a2e0',
+    messagingSenderId: '428418053793',
+    projectId: 'creative-movie-26af2',
+    storageBucket: 'creative-movie-26af2.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDfskCu0llKDO6ig5peeuQdlTtqtl6jYWU',
-    appId: '1:285038173444:ios:f667d8d9a9676d6b6dc451',
-    messagingSenderId: '285038173444',
-    projectId: 'creative-movie',
-    storageBucket: 'creative-movie.appspot.com',
-    iosClientId: '285038173444-1ol9tcklvdfso56ketbjf15ude7nb1qs.apps.googleusercontent.com',
+    apiKey: 'AIzaSyC1hdSc9UrB6f2imnNgGhN61hnF4ntisQI',
+    appId: '1:428418053793:ios:7a368371203e7c0a31a2e0',
+    messagingSenderId: '428418053793',
+    projectId: 'creative-movie-26af2',
+    storageBucket: 'creative-movie-26af2.firebasestorage.app',
     iosBundleId: 'com.dicoding.ditonton',
   );
 }

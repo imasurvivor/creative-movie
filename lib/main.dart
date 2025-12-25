@@ -4,7 +4,7 @@ import 'package:about/about.dart';
 import 'package:core/common/http_ssl_pinning.dart';
 
 import 'package:core/core.dart';
-import 'package:ditonton/home_page.dart';
+import 'package:ditonton/firebase_options.dart';
 import 'package:ditonton/on_boarding.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -46,10 +46,12 @@ import 'package:watchlist/presentation/pages/watchlist_page.dart';
 
 Future<void> main() async {
   enableFlutterDriverExtension();
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();   
   await HttpSslPinning.init();
 
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+        // options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
   di.init();
