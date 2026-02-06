@@ -46,11 +46,11 @@ import 'package:watchlist/presentation/pages/watchlist_page.dart';
 
 Future<void> main() async {
   enableFlutterDriverExtension();
-  WidgetsFlutterBinding.ensureInitialized();   
+  WidgetsFlutterBinding.ensureInitialized();
   await HttpSslPinning.init();
 
   await Firebase.initializeApp(
-        // options: DefaultFirebaseOptions.currentPlatform,
+    options: DefaultFirebaseOptions.currentPlatform,
   );
 
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
