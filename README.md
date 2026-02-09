@@ -18,3 +18,9 @@ Movie App Implement :
 
 How to use :
 use fvm 3.3.10
+
+How to make the modular features
+fvm flutter create --template=package feature_names
+
+how to open emulator
+emulator -avd Pixel_6_API_34 -gpu swiftshader_indirect
