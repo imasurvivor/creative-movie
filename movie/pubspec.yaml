@@ -19,7 +19,7 @@ dependencies:
   equatable: ^2.0.2
   flutter:
     sdk: flutter
-  firebase_core: ^2.19.0
+  firebase_core: ^2.27.0
   firebase_crashlytics: ^3.1.5
   flutter_bloc: ^8.0.0
   test_cov_console: ^0.2.2

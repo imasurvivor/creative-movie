@@ -11,7 +11,6 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_driver/driver_extension.dart';
 import 'package:movie/presentation/bloc/movie_detail_bloc.dart';
 import 'package:movie/presentation/bloc/movie_list_bloc.dart';
 import 'package:movie/presentation/bloc/popular_movie_bloc.dart';
@@ -33,7 +32,7 @@ import 'package:tv_series/presentation/pages/series_detail_page.dart';
 import 'package:tv_series/presentation/pages/top_rated_series_page.dart';
 import 'package:watchlist/presentation/bloc/watchlist_bloc.dart';
 import 'package:watchlist/presentation/pages/watchlist_page.dart';
-
+import 'package:authentication/presentation/pages/authentication_pages.dart';
 // void main() async {
 //   WidgetsFlutterBinding.ensureInitialized();
 //   await HttpSslPinning.init();
@@ -45,7 +44,7 @@ import 'package:watchlist/presentation/pages/watchlist_page.dart';
 // }
 
 Future<void> main() async {
-  enableFlutterDriverExtension();
+  // enableFlutterDriverExtension(); --> need to fix it
   WidgetsFlutterBinding.ensureInitialized();
   await HttpSslPinning.init();
 
@@ -132,10 +131,12 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: kRichBlack,
           textTheme: kTextTheme,
         ),
-        home: OnBoarding(),
+        home: AuthenticationPages(),
         navigatorObservers: [routeObserver],
         onGenerateRoute: (RouteSettings settings) {
           switch (settings.name) {
+            case AuthenticationPages.routeName:
+              return MaterialPageRoute(builder: (_) => AuthenticationPages());
             // case '/home':
             //   return MaterialPageRoute(builder: (_) => HomePage());
             case OnBoarding.routeName:

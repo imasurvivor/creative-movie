@@ -1,56 +1,28 @@
-name: search
-description: A new Flutter package project.
+name: authentication
+description: "A new Flutter package project."
 version: 0.0.1
-publish_to: 'none'
+homepage:
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
   flutter: ">=3.19.0"
 
 dependencies:
-  analyzer: ^2.6.0
-  cached_network_image: 
-  cupertino_icons: ^1.0.2
-  encrypt: ^5.0.1
-  sqflite_sqlcipher: ^2.1.0
-
-  dartz: ^0.10.0-nullsafety.2
-  equatable: ^2.0.2
+  firebase_auth: ^4.17.0
+  firebase_core: ^2.27.0
   flutter:
     sdk: flutter
-  firebase_core: ^2.27.0
-  firebase_crashlytics: ^3.1.5
-  flutter_bloc: ^8.0.0
-  test_cov_console: ^0.2.2
-  provider: ^6.0.0
-  rxdart: ^0.27.2
-  core:
-    path: ../core
-  watchlist:
-    path: ../watchlist
 
 dev_dependencies:
-  bloc_test: ^9.0.0
-  build_runner: ^2.0.4
-  flutter_lints: ^2.0.1
   flutter_test:
     sdk: flutter
-  integration_test:
-    sdk: flutter
-  mockito: ^5.0.8
-  mocktail: ^0.2.0
-  test: ^1.16.0
-  test_api: any
-  test_core:
-
-dependency_overrides:
-  analyzer: ^4.3.1
+  flutter_lints: ^3.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
-# flutter:
+flutter:
 
   # To add assets to your package, add an assets section, like this:
   # assets:
