@@ -17,7 +17,7 @@ Movie App Implement :
 ![Analytics](screenshot/analytics.png)
 
 How to use :
-use fvm 3.3.10
+use fvm 3.19.6
 
 How to make the modular features
 fvm flutter create --template=package feature_names
