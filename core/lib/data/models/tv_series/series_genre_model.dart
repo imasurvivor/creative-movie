@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import '../../../domain/entities/tv_series/series_genre.dart';
 
 class TvSeriesGenreModel extends Equatable {
-  TvSeriesGenreModel({
+  const TvSeriesGenreModel({
     required this.id,
     required this.name,
   });

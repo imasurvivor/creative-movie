@@ -21,7 +21,7 @@ dependencies:
   test_cov_console: ^0.2.2
   core:
     path: ../core
-  flutter_lints: ^2.0.1
+  flutter_lints: ^3.0.0
   
 
 dev_dependencies:

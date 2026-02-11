@@ -28,13 +28,17 @@ dependencies:
   movie:
     path: ../movie
 
+  authentication:
+    path: ../authentication
+  cloud_firestore: ^4.17.5
+
 
 
 
 dev_dependencies:
   bloc_test: ^9.0.0
   build_runner: ^2.0.4
-  flutter_lints: ^2.0.1
+  flutter_lints: ^3.0.0
   flutter_test:
     sdk: flutter
   integration_test:
