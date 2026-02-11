@@ -22,6 +22,8 @@ dependencies:
 
   cached_network_image: ^3.0.0
 
+  cloud_firestore: ^4.17.5
+  
   tv_series: 
     path: ../tv_series
 
@@ -30,7 +32,6 @@ dependencies:
 
   authentication:
     path: ../authentication
-  cloud_firestore: ^4.17.5
 
 
 

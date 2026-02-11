@@ -1,4 +1,4 @@
-// part of 'auth_bloc.dart';
+part of 'auth_bloc.dart';
 
 // class AuthEvent extends Equatable {
 //   @override

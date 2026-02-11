@@ -11,4 +11,10 @@ abstract class AuthRepository {
     String firstName,
     String lastName,
   });
+  Future<Either<Failure, bool>> isLoggedIn();
+  Future<Either<Failure, void>> sendPasswordResetEmail(String email);
+  Future<Either<Failure, void>> updatePassword(String newPassword);
+  Future<Either<Failure, void>> deleteUser();
+  Future<Either<Failure, void>> signOut();
+  Future<Either<Failure, String?>> getUserId();
 }
