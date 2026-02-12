@@ -12,11 +12,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LogoutUseCase logoutUseCase;
   final IsLoggedInUseCase isLoggedInUseCase;
   final GetCurrentUserIdUseCase getCurrentUserIdUseCase;
+
   AuthBloc({
     required this.loginUseCase,
     required this.registerUseCase,
     required this.logoutUseCase,
     required this.isLoggedInUseCase,
     required this.getCurrentUserIdUseCase,
-  }) : super(AuthInitial());
+  }) : super(AuthInitial()) {
+    on<RegisterRequested>((event, emit) async {
+      emit(AuthLoading());
+
+      final result = await registerUseCase.execute(event.email, event.password);
+      result.fold((failure) {
+        emit(Unauthenticated(failure.message));
+      }, (userId) {
+        emit(Authenticated(userId));
+      });
+    });
+  }
 }
