@@ -1,4 +1,6 @@
+import 'package:authentication/presentation/bloc/auth_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RegisterPage extends StatefulWidget {
   static const routeName = '/register';
@@ -9,83 +11,119 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final List<Map<String, String>> formFields = [
-    {
-      'label': 'Username',
-      'key': 'username',
-    },
-    {'label': 'First Name', 'key': 'firstName'},
-    {'label': 'Last Name', 'key': 'lastName'},
-    {'label': 'Age', 'key': 'age'},
-    {'label': 'Email', 'key': 'email'},
-    {'label': 'Password', 'key': 'password'},
-  ];
-
   final List<FormFieldItem> formFieldItems = [
     FormFieldItem(
-        key: 'username',
-        label: 'Username',
-        controller: TextEditingController()),
+      key: 'username',
+      label: 'Username',
+      controller: TextEditingController(),
+    ),
     FormFieldItem(
-        key: 'firstName',
-        label: 'First Name',
-        controller: TextEditingController()),
+      key: 'firstName',
+      label: 'First Name',
+      controller: TextEditingController(),
+    ),
     FormFieldItem(
-        key: 'lastName',
-        label: 'Last Name',
-        controller: TextEditingController()),
+      key: 'lastName',
+      label: 'Last Name',
+      controller: TextEditingController(),
+    ),
     FormFieldItem(
-        key: 'age', label: 'Age', controller: TextEditingController()),
+      key: 'age',
+      label: 'Age',
+      controller: TextEditingController(),
+    ),
     FormFieldItem(
-        key: 'email', label: 'Email', controller: TextEditingController()),
+      key: 'email',
+      label: 'Email',
+      controller: TextEditingController(),
+    ),
     FormFieldItem(
-        key: 'password',
-        label: 'Password',
-        controller: TextEditingController()),
+      key: 'password',
+      label: 'Password',
+      controller: TextEditingController(),
+    ),
   ];
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    for (final field in formFieldItems) {
-      field.controller.text = '';
-    }
+  void _onSubmit() {
+    final email =
+        formFieldItems.firstWhere((e) => e.key == 'email').controller.text;
+    final password =
+        formFieldItems.firstWhere((e) => e.key == 'password').controller.text;
+    final username =
+        formFieldItems.firstWhere((e) => e.key == 'username').controller.text;
+    final firstName =
+        formFieldItems.firstWhere((e) => e.key == 'firstName').controller.text;
+    final lastName =
+        formFieldItems.firstWhere((e) => e.key == 'lastName').controller.text;
+    final age =
+        formFieldItems.firstWhere((e) => e.key == 'age').controller.text;
+
+    context.read<AuthBloc>().add(
+          RegisterRequested(
+              email: email,
+              password: password,
+              username: username,
+              firstName: firstName,
+              lastName: lastName,
+              age: int.tryParse(age) ?? int.parse(age)),
+        );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Register'),
-      ),
-      body: ListView.builder(
+      appBar: AppBar(title: const Text('Register')),
+      body: BlocListener<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is AuthLoading) {
+            // optional loading UI
+            CircularProgressIndicator();
+          }
+
+          if (state is Authenticated) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Register success')),
+            );
+            // Navigator.pushReplacementNamed(context, '/home');
+          }
+
+          if (state is Unauthenticated) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.message)),
+            );
+          }
+        },
+        child: ListView.builder(
           itemCount: formFieldItems.length + 1,
           itemBuilder: (context, index) {
             if (index == formFieldItems.length) {
-              // ✅ SUBMIT BUTTON
               return Padding(
                 padding: const EdgeInsets.all(16),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: _onSubmit,
                   child: const Text('Submit'),
                 ),
               );
             }
+
             final field = formFieldItems[index];
 
             return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: buildTextField(
-                    field: {'key': field.key, 'label': field.label},
-                    controller: field.controller));
-          }),
+              padding: const EdgeInsets.all(8),
+              child: buildTextField(
+                fieldKey: field.key,
+                label: field.label,
+                controller: field.controller,
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     for (final field in formFieldItems) {
       field.controller.dispose();
     }
@@ -93,15 +131,15 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 }
 
-Widget buildTextField(
-    {required Map<String, String> field,
-    required TextEditingController controller}) {
-  final key = field['key'];
-  final label = field['label'];
+Widget buildTextField({
+  required String fieldKey,
+  required String label,
+  required TextEditingController controller,
+}) {
   return TextField(
-    key: ValueKey(key),
+    key: ValueKey(fieldKey),
     controller: controller,
-    obscureText: key == 'password' ? true : false,
+    obscureText: fieldKey == 'password',
     decoration: InputDecoration(
       labelText: label,
       border: const OutlineInputBorder(),
@@ -114,6 +152,9 @@ class FormFieldItem {
   final String label;
   final TextEditingController controller;
 
-  FormFieldItem(
-      {required this.key, required this.label, required this.controller});
+  FormFieldItem({
+    required this.key,
+    required this.label,
+    required this.controller,
+  });
 }

@@ -12,8 +12,19 @@ class AppStarted extends AuthEvent {}
 class RegisterRequested extends AuthEvent {
   final String email;
   final String password;
+  final String username;
+  final String firstName;
+  final String lastName;
+  final int age;
 
-  const RegisterRequested(this.email, this.password);
+  const RegisterRequested({
+    required this.username,
+    required this.email,
+    required this.password,
+    required this.firstName,
+    required this.lastName,
+    required this.age,
+  });
 
   @override
   List<Object?> get props => [email, password];

@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:about/about.dart';
+import 'package:authentication/presentation/bloc/auth_bloc.dart';
+import 'package:authentication/presentation/pages/signup_pages.dart';
 import 'package:core/common/http_ssl_pinning.dart';
 
 import 'package:core/core.dart';
@@ -49,7 +51,7 @@ Future<void> main() async {
   await HttpSslPinning.init();
 
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
+    // options: DefaultFirebaseOptions.currentPlatform,
   );
 
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
@@ -71,6 +73,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (_) => di.locator<AuthBloc>()),
         BlocProvider(
           create: (_) => di.locator<NowPlayingMovieListBloc>(),
         ),
@@ -131,12 +134,14 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: kRichBlack,
           textTheme: kTextTheme,
         ),
-        home: AuthenticationPages(),
+        home: RegisterPage(),
         navigatorObservers: [routeObserver],
         onGenerateRoute: (RouteSettings settings) {
           switch (settings.name) {
-            case AuthenticationPages.routeName:
-              return MaterialPageRoute(builder: (_) => AuthenticationPages());
+            case RegisterPage.routeName:
+              return MaterialPageRoute(builder: (_) => RegisterPage());
+            // case AuthenticationPages.routeName:
+            //   return MaterialPageRoute(builder: (_) => AuthenticationPages());
             // case '/home':
             //   return MaterialPageRoute(builder: (_) => HomePage());
             case OnBoarding.routeName:

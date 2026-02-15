@@ -48,7 +48,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, void>> deleteUser()async {
+  Future<Either<Failure, void>> deleteUser() async {
     try {
       return remoteDataSource.deleteUser().then((value) => Right(value));
     } on ServerException {
@@ -59,7 +59,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, String?>> getUserId() async{
+  Future<Either<Failure, String?>> getUserId() async {
     try {
       final result = await remoteDataSource.getUserId();
       return Right(result);
@@ -71,43 +71,47 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> isLoggedIn() async{
-    try{
+  Future<Either<Failure, bool>> isLoggedIn() async {
+    try {
       final result = await remoteDataSource.isLoggedIn();
       return Right(result);
-    }on ServerException{
-      return Left(ServerFailure(''));
-    }on SocketException{
-      return Left(ConnectionFailure('Failed to connect to the network'));
-    }
-  }
-
-  @override
-  Future<Either<Failure, void>> sendPasswordResetEmail(String email) async{
-    try{
-      return remoteDataSource.sendPasswordResetEmail(email).then((value) => Right(value));
-    }on ServerException{
-      return Left(ServerFailure(''));
-    }on SocketException{
-      return Left(ConnectionFailure('Failed to connect to the network'));
-    }
-  }
-
-  @override
-  Future<Either<Failure, void>> signOut()async {
-    try{
-      return remoteDataSource.signOut().then((value) =>   Right(value));
     } on ServerException {
       return Left(ServerFailure(''));
-    }
-    on SocketException {
+    } on SocketException {
       return Left(ConnectionFailure('Failed to connect to the network'));
-  }}
+    }
+  }
 
   @override
-  Future<Either<Failure, void>> updatePassword(String newPassword) async{
+  Future<Either<Failure, void>> sendPasswordResetEmail(String email) async {
     try {
-      return remoteDataSource.updatePassword(newPassword).then((value) => Right(value));
+      return remoteDataSource
+          .sendPasswordResetEmail(email)
+          .then((value) => Right(value));
+    } on ServerException {
+      return Left(ServerFailure(''));
+    } on SocketException {
+      return Left(ConnectionFailure('Failed to connect to the network'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> signOut() async {
+    try {
+      return remoteDataSource.signOut().then((value) => Right(value));
+    } on ServerException {
+      return Left(ServerFailure(''));
+    } on SocketException {
+      return Left(ConnectionFailure('Failed to connect to the network'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> updatePassword(String newPassword) async {
+    try {
+      return remoteDataSource
+          .updatePassword(newPassword)
+          .then((value) => Right(value));
     } on ServerException {
       return Left(ServerFailure(''));
     } on SocketException {

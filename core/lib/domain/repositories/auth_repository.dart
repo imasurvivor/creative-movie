@@ -8,8 +8,8 @@ abstract class AuthRepository {
     required String password,
     required String username,
     required int age,
-    String firstName,
-    String lastName,
+    required String firstName,
+    required String lastName,
   });
   Future<Either<Failure, bool>> isLoggedIn();
   Future<Either<Failure, void>> sendPasswordResetEmail(String email);

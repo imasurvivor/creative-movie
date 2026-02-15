@@ -14,9 +14,21 @@ class SignUpUseCase {
   final AuthRepository repository;
   SignUpUseCase(this.repository);
 
-  Future<Either<Failure, String>> execute(String email, String password) {
+  Future<Either<Failure, String>> execute(
+    String email,
+    String password,
+    String username,
+    String firstName,
+    String lastName,
+    int age,
+  ) {
     return repository.registerAndSaveUser(
-        email: email, password: password, username: '', age: 0);
+        email: email,
+        password: password,
+        username: username,
+        firstName: firstName,
+        lastName: lastName,
+        age: age);
   }
 }
 

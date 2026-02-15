@@ -1,5 +1,8 @@
+import 'package:authentication/domain/usecases/auth.dart';
+import 'package:authentication/presentation/bloc/auth_bloc.dart';
 import 'package:core/common/http_ssl_pinning.dart';
 import 'package:core/core.dart';
+import 'package:core/data/repositories/auth_reposityory_impl.dart';
 import 'package:get_it/get_it.dart';
 import 'package:movie/domain/usecases/get_movie_detail.dart';
 import 'package:movie/domain/usecases/get_movie_recommendations.dart';
@@ -10,6 +13,7 @@ import 'package:movie/presentation/bloc/movie_detail_bloc.dart';
 import 'package:movie/presentation/bloc/movie_list_bloc.dart';
 import 'package:movie/presentation/bloc/popular_movie_bloc.dart';
 import 'package:movie/presentation/bloc/top_rated_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:search/domain/usecases/search_movies.dart';
 import 'package:search/domain/usecases/search_series.dart';
 import 'package:search/presentation/bloc/search_bloc.dart';
@@ -64,6 +68,14 @@ void init() {
   locator.registerFactory(() => SearchMovieBloc(locator()));
   locator.registerFactory(() => SearchTvSeriesBloc(locator()));
 
+//authentication
+  locator.registerFactory(() => AuthBloc(
+      loginUseCase: locator(),
+      registerUseCase: locator(),
+      logoutUseCase: locator(),
+      isLoggedInUseCase: locator(),
+      getCurrentUserIdUseCase: locator()));
+
 //Tv Series
   locator.registerFactory(
     () => SeriesListBloc(locator()),
@@ -113,6 +125,14 @@ void init() {
   locator.registerLazySingleton(() => GetWatchlistMovies(locator()));
   // locator.registerLazySingleton(() => GetWatchlistMovies(locator()));
 
+  //auth
+  locator.registerLazySingleton(() => LoginUseCase(locator()));
+  locator.registerLazySingleton(() => SignUpUseCase(locator()));
+  locator.registerLazySingleton(() => DeleteUserUseCase(locator()));
+  locator.registerLazySingleton(() => LogoutUseCase(locator()));
+  locator.registerLazySingleton(() => IsLoggedInUseCase(locator()));
+  locator.registerLazySingleton(() => GetCurrentUserIdUseCase(locator()));
+
   //Tv Series
   locator.registerLazySingleton(() => GetNowPlayingTvSeriess(locator()));
   locator.registerLazySingleton(() => GetPopularTvSeriess(locator()));
@@ -141,12 +161,20 @@ void init() {
     ),
   );
 
+  //auth
+  locator.registerLazySingleton<AuthRepository>(
+      () => AuthRepositoryImpl(remoteDataSource: locator()));
+
   // data sources
   //movie
   locator.registerLazySingleton<MovieRemoteDataSource>(
       () => MovieRemoteDataSourceImpl(client: locator()));
   locator.registerLazySingleton<MovieLocalDataSource>(
       () => MovieLocalDataSourceImpl(databaseHelper: locator()));
+
+  //auth
+  locator.registerLazySingleton<AuthRemoteDataSource>(
+      () => AuthRemoteDataSourceImpl());
 
   //tvseries
   locator.registerLazySingleton<TvSeriesRemoteDataSource>(
