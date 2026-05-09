@@ -7,12 +7,14 @@ import 'package:core/common/http_ssl_pinning.dart';
 
 import 'package:core/core.dart';
 import 'package:ditonton/firebase_options.dart';
+import 'package:ditonton/home_page.dart';
 import 'package:ditonton/on_boarding.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_driver/driver_extension.dart';
 import 'package:movie/presentation/bloc/movie_detail_bloc.dart';
 import 'package:movie/presentation/bloc/movie_list_bloc.dart';
 import 'package:movie/presentation/bloc/popular_movie_bloc.dart';
@@ -46,12 +48,15 @@ import 'package:authentication/presentation/pages/authentication_pages.dart';
 // }
 
 Future<void> main() async {
-  // enableFlutterDriverExtension(); --> need to fix it
+  const bool isTest = bool.fromEnvironment('FLUTTER_DRIVER');
+  if (isTest) {
+    enableFlutterDriverExtension();
+  }
   WidgetsFlutterBinding.ensureInitialized();
   await HttpSslPinning.init();
 
   await Firebase.initializeApp(
-    // options: DefaultFirebaseOptions.currentPlatform,
+    options: DefaultFirebaseOptions.currentPlatform,
   );
 
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
@@ -134,16 +139,16 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: kRichBlack,
           textTheme: kTextTheme,
         ),
-        home: RegisterPage(),
+        home: AuthenticationPage(),
         navigatorObservers: [routeObserver],
         onGenerateRoute: (RouteSettings settings) {
           switch (settings.name) {
             case RegisterPage.routeName:
               return MaterialPageRoute(builder: (_) => RegisterPage());
-            // case AuthenticationPages.routeName:
-            //   return MaterialPageRoute(builder: (_) => AuthenticationPages());
-            // case '/home':
-            //   return MaterialPageRoute(builder: (_) => HomePage());
+            case AuthenticationPage.routeName:
+              return MaterialPageRoute(builder: (_) => AuthenticationPage());
+            case HomePage.routeName:
+              return MaterialPageRoute(builder: (_) => HomePage());
             case OnBoarding.routeName:
               return MaterialPageRoute(builder: (_) => OnBoarding());
             case HomeMoviePage.routeName:

@@ -12,6 +12,8 @@ import 'package:tv_series/presentation/pages/home_series_page.dart';
 import 'package:watchlist/presentation/pages/watchlist_page.dart';
 
 class HomePage extends StatefulWidget {
+  static const routeName = 'homepage';
+
   @override
   _HomePageState createState() => _HomePageState();
 }

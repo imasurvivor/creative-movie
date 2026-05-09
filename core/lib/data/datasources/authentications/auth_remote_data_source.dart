@@ -29,11 +29,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   @override
-  Future<String> login(String email, String password) {
+  Future<String> login(String email, String password) async {
     try {
-      final userCredential = _firebaseAuth.signInWithEmailAndPassword(
+      final userCredential = await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
-      return userCredential.then((value) => value.user?.uid ?? '');
+      print('logged as ${userCredential.user!.email}');
+      return userCredential.user!.uid;
     } on FirebaseAuthException catch (e) {
       return Future.error(e.message ?? 'An unknown error occurred');
     }

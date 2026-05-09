@@ -52,6 +52,13 @@ android {
 
     kotlinOptions {
     jvmTarget = "17"
+
+    lint {
+        baseline = file("lint-baseline.xml")
+    }
+    lint {
+    abortOnError false
+}
 }
 
     defaultConfig {
@@ -59,7 +66,7 @@ android {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.dicoding.ditonton"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }

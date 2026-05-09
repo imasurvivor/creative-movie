@@ -1,6 +1,7 @@
 import 'package:authentication/domain/usecases/auth.dart';
 import 'package:bloc/bloc.dart';
 import 'package:core/core.dart';
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
 part 'auth_event.dart';
@@ -35,7 +36,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<LoginRequested>((event, emit) async {
       final result = await loginUseCase.execute(event.email, event.password);
       result.fold((failure) => emit(Unauthenticated(failure.message)),
-          (userId) => emit(Unauthenticated(userId)));
+          (userId) {
+             print("it's right hereee -> $userId");
+             emit(Authenticated(userId));
+          });
     });
   }
 }

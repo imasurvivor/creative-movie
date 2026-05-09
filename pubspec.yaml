@@ -58,8 +58,6 @@ dependencies:
   authentication:
     path: authentication
   onboarding: ^3.1.0
-  flutter_driver:
-    sdk: flutter
 
 
 
@@ -76,6 +74,8 @@ dev_dependencies:
   test: ^1.16.0
   test_api: any
   test_core:
+  flutter_driver:
+    sdk: flutter
 
 dependency_overrides:
   analyzer: ^4.3.1
