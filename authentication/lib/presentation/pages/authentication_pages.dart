@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ditonton/home_page.dart';
 
 class AuthenticationPage extends StatefulWidget {
   static const routeName = '/authentication-page';
@@ -34,12 +35,14 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
         listener: (context, state) {
           if (state is AuthLoading) {
             // optional loading UI
+            // you can also show a loading dialog or indicator here
             CircularProgressIndicator();
           }
           if (state is Authenticated) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('Success Login!')),
             );
+            Navigator.pushReplacementNamed(context, HomePage.routeName);
           }
           if (state is Unauthenticated) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -84,7 +87,13 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                   onPressed: _onSubmit,
                   child: const Text('Login'),
                 ),
-              )
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/register');
+                },
+                child: const Text('Don\'t have an account? Register here'),
+              ),
             ],
           ),
         ),
