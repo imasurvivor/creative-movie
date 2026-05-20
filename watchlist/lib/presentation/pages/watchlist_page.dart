@@ -80,7 +80,7 @@ class _WatchlistPageState extends State<WatchlistPage> with RouteAware {
 }
 
 class WatchListMovies extends StatelessWidget {
-  const WatchListMovies({Key? key}) : super(key: key);
+  const WatchListMovies({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +118,7 @@ class WatchListMovies extends StatelessWidget {
 }
 
 class WatchListSeries extends StatelessWidget {
-  const WatchListSeries({Key? key}) : super(key: key);
+  const WatchListSeries({super.key});
 
   @override
   Widget build(BuildContext context) {

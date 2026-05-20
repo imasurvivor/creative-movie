@@ -1,8 +1,8 @@
 import 'package:about/about.dart';
+import 'package:authentication/presentation/pages/authentication_pages.dart';
 import 'package:core/core.dart';
-import 'package:flutter/foundation.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:movie/presentation/bloc/movie_list_bloc.dart';
 import 'package:movie/presentation/pages/home_movie_page.dart';
 import 'package:provider/provider.dart';
@@ -96,12 +96,15 @@ class _HomePageState extends State<HomePage> {
               title: Text('About', style: kSubtitle),
             ),
             ElevatedButton(
-                onPressed: () {
-                  if (TargetPlatform.android == defaultTargetPlatform) {
-                    SystemNavigator.pop();
-                  }
+                onPressed: () async {
+                  // if (TargetPlatform.android == defaultTargetPlatform) {
+                  //   SystemNavigator.pop();
+                  // }
+                  await FirebaseAuth.instance.signOut();
+                  Navigator.pushReplacementNamed(
+                      context, AuthenticationPage.routeName);
                 },
-                child: Text('Exit'))
+                child: Text('Logout'))
           ],
         ),
       ),

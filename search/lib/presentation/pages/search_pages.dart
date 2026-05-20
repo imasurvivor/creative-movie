@@ -63,7 +63,7 @@ class SearchPage extends StatelessWidget {
 }
 
 class _SearchMovies extends StatelessWidget {
-  const _SearchMovies({Key? key}) : super(key: key);
+  const _SearchMovies();
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +100,7 @@ class _SearchMovies extends StatelessWidget {
 }
 
 class _SearchSeries extends StatelessWidget {
-  const _SearchSeries({Key? key}) : super(key: key);
+  const _SearchSeries();
 
   @override
   Widget build(BuildContext context) {

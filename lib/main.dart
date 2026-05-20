@@ -26,6 +26,7 @@ import 'package:movie/presentation/pages/top_rated_movies_page.dart';
 import 'package:ditonton/injection.dart' as di;
 import 'package:search/presentation/bloc/search_bloc.dart';
 import 'package:search/presentation/pages/search_pages.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tv_series/presentation/bloc/popular_series_bloc.dart';
 import 'package:tv_series/presentation/bloc/series_detail_bloc.dart';
 import 'package:tv_series/presentation/bloc/series_list_bloc.dart';
@@ -53,6 +54,7 @@ Future<void> main() async {
     enableFlutterDriverExtension();
   }
   WidgetsFlutterBinding.ensureInitialized();
+  await SharedPreferences.getInstance();
   await HttpSslPinning.init();
 
   await Firebase.initializeApp(

@@ -13,7 +13,6 @@ import 'package:movie/presentation/bloc/movie_detail_bloc.dart';
 import 'package:movie/presentation/bloc/movie_list_bloc.dart';
 import 'package:movie/presentation/bloc/popular_movie_bloc.dart';
 import 'package:movie/presentation/bloc/top_rated_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:search/domain/usecases/search_movies.dart';
 import 'package:search/domain/usecases/search_series.dart';
 import 'package:search/presentation/bloc/search_bloc.dart';
