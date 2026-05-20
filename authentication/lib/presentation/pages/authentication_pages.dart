@@ -1,4 +1,5 @@
 import 'package:authentication/presentation/bloc/auth_bloc.dart';
+import 'package:authentication/presentation/pages/signup_pages.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -24,6 +25,8 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
           password: passwordController.text,
         ));
   }
+
+  bool _isHidden = true;
 
   @override
   Widget build(BuildContext context) {
@@ -71,11 +74,22 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                 identifier: 'password_input',
                 child: TextField(
                   controller: passwordController,
-                  obscureText: true,
+                  obscureText: _isHidden
+                      ? true
+                      : false, // this will hide the text if _isHidden is true
                   decoration: InputDecoration(
-                    labelText: 'password',
-                    border: const OutlineInputBorder(),
-                  ),
+                      labelText: 'password',
+                      border: const OutlineInputBorder(),
+                      suffixIcon: IconButton(
+                        icon: Icon(_isHidden
+                            ? Icons.visibility
+                            : Icons.visibility_off),
+                        onPressed: () {
+                          setState(() {
+                            _isHidden = !_isHidden;
+                          });
+                        },
+                      )),
                 ),
               ),
               SizedBox(
@@ -90,7 +104,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/register');
+                  Navigator.pushNamed(context, RegisterPage.routeName);
                 },
                 child: const Text('Don\'t have an account? Register here'),
               ),
