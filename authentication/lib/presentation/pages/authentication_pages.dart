@@ -18,6 +18,7 @@ class AuthenticationPage extends StatefulWidget {
 class _AuthenticationPageState extends State<AuthenticationPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  bool _isLoadingDialogShown = false;
 
   void _onSubmit() {
     context.read<AuthBloc>().add(LoginRequested(
@@ -37,19 +38,53 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthLoading) {
-            // optional loading UI
-            // you can also show a loading dialog or indicator here
-            CircularProgressIndicator();
+            if (!_isLoadingDialogShown) {
+              _isLoadingDialogShown = true;
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (context) => const AlertDialog(
+                  content: Row(
+                    children: [
+                      CircularProgressIndicator(),
+                      SizedBox(width: 20),
+                      Text('Loading...'),
+                    ],
+                  ),
+                ),
+              );
+            }
           }
           if (state is Authenticated) {
+            _isLoadingDialogShown = false;
+            // Close loading dialog if present
+            if (Navigator.canPop(context)) {
+              Navigator.pop(context);
+            }
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('Success Login!')),
             );
             Navigator.pushReplacementNamed(context, HomePage.routeName);
           }
           if (state is Unauthenticated) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
+            _isLoadingDialogShown = false;
+            // Close loading dialog if present
+            if (Navigator.canPop(context)) {
+              Navigator.pop(context);
+            }
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: const Text('Login Failed'),
+                content: Text(state.message),
+                icon: const Icon(Icons.warning, color: Colors.red),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('OK'),
+                  ),
+                ],
+              ),
             );
           }
         },

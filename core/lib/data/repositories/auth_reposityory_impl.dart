@@ -10,8 +10,8 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<Either<Failure, String>> login(String email, String password) async {
     try {
-      final result = remoteDataSource.login(email, password);
-      return Right(result.toString());
+      final result = await remoteDataSource.login(email, password);
+      return Right(result);
     } on ServerException {
       return Left(ServerFailure(''));
     } on SocketException {

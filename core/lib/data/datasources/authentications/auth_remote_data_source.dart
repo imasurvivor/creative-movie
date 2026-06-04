@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:core/common/exception.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class AuthRemoteDataSource {
@@ -36,7 +37,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       print('logged as ${userCredential.user!.email}');
       return userCredential.user!.uid;
     } on FirebaseAuthException catch (e) {
-      return Future.error(e.message ?? 'An unknown error occurred');
+      throw ServerException();
     }
   }
 
