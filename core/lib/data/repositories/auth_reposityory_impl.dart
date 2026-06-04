@@ -13,9 +13,14 @@ class AuthRepositoryImpl implements AuthRepository {
       final result = await remoteDataSource.login(email, password);
       return Right(result);
     } on ServerException catch (e) {
+      print('Repository caught ServerException: ${e.message}');
       return Left(ServerFailure(e.message));
     } on SocketException {
       return Left(ConnectionFailure('Failed to connect to the network'));
+    } catch (e) {
+      print('Repository caught unexpected exception: $e');
+      print('Exception type: ${e.runtimeType}');
+      return Left(ServerFailure(e.toString()));
     }
   }
 

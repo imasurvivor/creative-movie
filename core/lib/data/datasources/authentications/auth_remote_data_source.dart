@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:core/common/exception.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 abstract class AuthRemoteDataSource {
   Future<String> login(String email, String password);
@@ -38,7 +39,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       return userCredential.user!.uid;
     } on FirebaseAuthException catch (e) {
       String errorMessage = 'Login Failed';
-      if (e.code == 'wrong-password') {
+      print('Firebase Error Code: ${e.code}');
+      print('Firebase Error Message: ${e.message}');
+      if (e.code == 'wrong-password' || e.code == 'invalid-credential') {
         errorMessage = 'The password is incorrect. Please try again.';
       } else if (e.code == 'user-not-found') {
         errorMessage = 'No user found with this email address.';
@@ -49,6 +52,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       } else if (e.code == 'too-many-requests') {
         errorMessage = 'Too many login attempts. Please try again later.';
       }
+      print('Error Message Being Thrown: $errorMessage');
       throw ServerException(errorMessage);
     }
   }
@@ -90,6 +94,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         errorMessage = 'The password is too weak. Use a stronger password.';
       }
       throw ServerException(errorMessage);
+
+      //throw ServerException();
     }
   }
 

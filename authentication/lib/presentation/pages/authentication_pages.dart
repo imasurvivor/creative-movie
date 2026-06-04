@@ -1,6 +1,7 @@
 import 'package:authentication/presentation/bloc/auth_bloc.dart';
 import 'package:authentication/presentation/pages/signup_pages.dart';
 import 'package:core/common/constants.dart';
+import 'package:core/core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -34,7 +35,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login Page'),
+        title: Text('Login'),
       ),
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
@@ -76,8 +77,8 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
             showDialog(
               context: context,
               builder: (context) => AlertDialog(
-                title: const Text('Failed'),
-                content: Text(state.message),
+                title: Text('Something went wrong', style: kSubtitle),
+                content: Text(state.message, style: kBodyText),
                 icon: Icon(Icons.warning, color: kColorScheme.error),
                 actions: [
                   TextButton(
