@@ -37,7 +37,19 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       print('logged as ${userCredential.user!.email}');
       return userCredential.user!.uid;
     } on FirebaseAuthException catch (e) {
-      throw ServerException();
+      String errorMessage = 'Login Failed';
+      if (e.code == 'wrong-password') {
+        errorMessage = 'The password is incorrect. Please try again.';
+      } else if (e.code == 'user-not-found') {
+        errorMessage = 'No user found with this email address.';
+      } else if (e.code == 'invalid-email') {
+        errorMessage = 'The email address is not valid.';
+      } else if (e.code == 'user-disabled') {
+        errorMessage = 'This user account has been disabled.';
+      } else if (e.code == 'too-many-requests') {
+        errorMessage = 'Too many login attempts. Please try again later.';
+      }
+      throw ServerException(errorMessage);
     }
   }
 
@@ -67,7 +79,17 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
       return uid ?? '';
     } on FirebaseAuthException catch (e) {
-      throw Exception(e.message ?? 'An unknown error occurred');
+      String errorMessage = 'Registration Failed';
+      if (e.code == 'email-already-in-use') {
+        errorMessage = 'This email address is already registered.';
+      } else if (e.code == 'invalid-email') {
+        errorMessage = 'The email address is not valid.';
+      } else if (e.code == 'operation-not-allowed') {
+        errorMessage = 'Email/password registration is not enabled.';
+      } else if (e.code == 'weak-password') {
+        errorMessage = 'The password is too weak. Use a stronger password.';
+      }
+      throw ServerException(errorMessage);
     }
   }
 
@@ -77,7 +99,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     if (user != null) {
       await user.delete();
     } else {
-      throw Exception('No user is currently signed in.');
+      throw ServerException();
     }
   }
 
@@ -115,7 +137,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     if (user != null) {
       return user.updatePassword(newPassword);
     } else {
-      throw Exception('No user is currently signed in.');
+      throw ServerException();
     }
   }
 }

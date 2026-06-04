@@ -1,5 +1,6 @@
 import 'package:authentication/presentation/bloc/auth_bloc.dart';
 import 'package:authentication/presentation/pages/signup_pages.dart';
+import 'package:core/common/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -75,9 +76,9 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
             showDialog(
               context: context,
               builder: (context) => AlertDialog(
-                title: const Text('Login Failed'),
+                title: const Text('Failed'),
                 content: Text(state.message),
-                icon: const Icon(Icons.warning, color: Colors.red),
+                icon: Icon(Icons.warning, color: kColorScheme.error),
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.pop(context),
@@ -131,12 +132,38 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                 height: 16,
               ),
               Semantics(
-                identifier: 'login_btn',
-                child: ElevatedButton(
-                  onPressed: _onSubmit,
-                  child: const Text('Login'),
-                ),
-              ),
+                  identifier: 'login_btn',
+                  child:
+                      // child: Padding(
+                      //   padding: const EdgeInsets.symmetric(horizontal: 20),
+                      //   child: ElevatedButton(
+                      //     onPressed: _onSubmit,
+                      //     child: const Text(
+                      //       'Log in',
+                      //       style: TextStyle(color: Colors.white),
+                      //     ),
+                      //   ),
+                      // ),
+                      Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: InkWell(
+                      onTap: _onSubmit,
+                      borderRadius: BorderRadius.circular(12),
+                      child: Container(
+                        width: 200,
+                        height: 50,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: kColorScheme.primary,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Text(
+                          'Login',
+                          style: TextStyle(color: kColorScheme.onPrimary),
+                        ),
+                      ),
+                    ),
+                  )),
               TextButton(
                 onPressed: () {
                   Navigator.pushNamed(context, RegisterPage.routeName);

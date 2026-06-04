@@ -1,9 +1,7 @@
 class ServerException implements Exception {
-  // final String message;
+  final String message;
 
-  // ServerException(
-  //     {this.message =
-  //         'An error occurred while communicating with the server.'});
+  ServerException([this.message = 'An error occurred while communicating with the server.']);
 }
 
 class DatabaseException implements Exception {

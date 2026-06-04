@@ -12,8 +12,8 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       final result = await remoteDataSource.login(email, password);
       return Right(result);
-    } on ServerException {
-      return Left(ServerFailure(''));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
     } on SocketException {
       return Left(ConnectionFailure('Failed to connect to the network'));
     }
@@ -38,8 +38,8 @@ class AuthRepositoryImpl implements AuthRepository {
         lastName: lastName,
       );
       return Right(result);
-    } on ServerException {
-      return Left(ServerFailure(''));
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
     } on SocketException {
       return Left(ConnectionFailure('Failed to connect to the network'));
     } catch (e) {
