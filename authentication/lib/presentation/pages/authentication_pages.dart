@@ -21,12 +21,15 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   bool _isLoadingDialogShown = false;
+  final _formKey = GlobalKey<FormState>();
 
   void _onSubmit() {
-    context.read<AuthBloc>().add(LoginRequested(
-          email: emailController.text,
-          password: passwordController.text,
-        ));
+    if (_formKey.currentState!.validate()) {
+      context.read<AuthBloc>().add(LoginRequested(
+            email: emailController.text,
+            password: passwordController.text,
+          ));
+    }
   }
 
   bool _isHidden = true;
@@ -34,9 +37,9 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-      ),
+      // appBar: AppBar(
+      //   title: Text('Login'),
+      // ),
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthLoading) {
@@ -91,87 +94,100 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
           }
         },
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ListView(
-            children: [
-              Semantics(
-                identifier: 'email_input',
-                child: TextField(
-                  controller: emailController,
-                  decoration: InputDecoration(
-                    labelText: 'email',
-                    border: const OutlineInputBorder(),
+          padding: const EdgeInsets.all(20),
+          child: Form(
+            key: _formKey,
+            child: ListView(
+              children: [
+                Text(
+                  'Login',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+                Semantics(
+                  identifier: 'email_input',
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your email';
+                      }
+                      if (!value.contains('@')) return 'Invalid email';
+
+                      return null;
+                    },
+                    controller: emailController,
+                    decoration: InputDecoration(
+                      labelText: 'email',
+                      border: const OutlineInputBorder(),
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              Semantics(
-                identifier: 'password_input',
-                child: TextField(
-                  controller: passwordController,
-                  obscureText: _isHidden
-                      ? true
-                      : false, // this will hide the text if _isHidden is true
-                  decoration: InputDecoration(
-                      labelText: 'password',
-                      border: const OutlineInputBorder(),
-                      suffixIcon: IconButton(
-                        icon: Icon(_isHidden
-                            ? Icons.visibility
-                            : Icons.visibility_off),
-                        onPressed: () {
-                          setState(() {
-                            _isHidden = !_isHidden;
-                          });
-                        },
-                      )),
+                SizedBox(
+                  height: 16,
                 ),
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              Semantics(
-                  identifier: 'login_btn',
-                  child:
-                      // child: Padding(
-                      //   padding: const EdgeInsets.symmetric(horizontal: 20),
-                      //   child: ElevatedButton(
-                      //     onPressed: _onSubmit,
-                      //     child: const Text(
-                      //       'Log in',
-                      //       style: TextStyle(color: Colors.white),
-                      //     ),
-                      //   ),
-                      // ),
-                      Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: InkWell(
-                      onTap: _onSubmit,
-                      borderRadius: BorderRadius.circular(12),
-                      child: Container(
-                        width: 200,
-                        height: 50,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: kColorScheme.primary,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Text(
-                          'Login',
-                          style: TextStyle(color: kColorScheme.onPrimary),
+                Semantics(
+                  identifier: 'password_input',
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your password';
+                      }
+                      return null;
+                    },
+                    controller: passwordController,
+                    obscureText: _isHidden
+                        ? true
+                        : false, // this will hide the text if _isHidden is true
+                    decoration: InputDecoration(
+                        labelText: 'password',
+                        border: const OutlineInputBorder(),
+                        suffixIcon: IconButton(
+                          icon: Icon(_isHidden
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          onPressed: () {
+                            setState(() {
+                              _isHidden = !_isHidden;
+                            });
+                          },
+                        )),
+                  ),
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                Semantics(
+                    identifier: 'login_btn',
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: InkWell(
+                        onTap: _onSubmit,
+                        borderRadius: BorderRadius.circular(12),
+                        child: Container(
+                          width: 200,
+                          height: 50,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: kColorScheme.primary,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Text(
+                            'Login',
+                            style: TextStyle(color: kColorScheme.onPrimary),
+                          ),
                         ),
                       ),
-                    ),
-                  )),
-              TextButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, RegisterPage.routeName);
-                },
-                child: const Text('Don\'t have an account? Register here'),
-              ),
-            ],
+                    )),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, RegisterPage.routeName);
+                  },
+                  child: const Text('Don\'t have an account? Register here'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
