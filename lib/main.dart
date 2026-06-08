@@ -63,10 +63,9 @@ Future<void> main() async {
 
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
   di.init();
+  runApp(MyApp());
   runZonedGuarded(
-    () {
-      runApp(MyApp());
-    },
+    () async {},
     (error, stack) => FirebaseCrashlytics.instance.recordError(
       error,
       stack,
