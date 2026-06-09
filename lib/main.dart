@@ -62,6 +62,7 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  //add this line to disable analytics collection in debug mode
   await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(false);
 
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
