@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:appium_flutter_server/appium_flutter_server.dart';
 import 'package:about/about.dart';
 import 'package:authentication/presentation/bloc/auth_bloc.dart';
 import 'package:authentication/presentation/pages/signup_pages.dart';
@@ -54,6 +55,11 @@ Future<void> main() async {
   if (isTest) {
     enableFlutterDriverExtension();
   }
+  const bool isAppiumTest = bool.fromEnvironment('APPIUM_TEST');
+  if (isAppiumTest) {
+    initializeTest(callback: _runApp);
+    return;
+  }
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPreferences.getInstance();
   await HttpSslPinning.init();
@@ -76,6 +82,17 @@ Future<void> main() async {
       fatal: true,
     ),
   );
+}
+
+Future<void> _runApp([dynamic tester]) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SharedPreferences.getInstance();
+  await HttpSslPinning.init();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(false);
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  di.init();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

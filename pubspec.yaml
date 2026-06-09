@@ -79,6 +79,7 @@ dev_dependencies:
   test_core:
   flutter_driver:
     sdk: flutter
+  appium_flutter_server: 0.0.18
 
 dependency_overrides:
   analyzer: ^4.3.1
